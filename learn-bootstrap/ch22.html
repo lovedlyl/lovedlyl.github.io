@@ -30,7 +30,7 @@
 	//- border-radius: 0 0 4px 4px;
 }
 #scrollSpy ul.nav-tabs{
-	top: 0; /* Set the top position of pinned element */
+	top: 0	; /* Set the top position of pinned element */
 }
 </style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第二十二章 手风琴效果</h2><h3 class="text-primary">22.1 基本结构</h3><p>最简单的结构就是一个触发器和一个折叠区：</p><div><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器</button><div class="collapse in" id="demo1">折叠区</div></div><pre> &lt;button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#demo1">触发器&lt;/button&gt;
 &lt;div class="collapse in" id="demo1"&gt;折叠区&lt;/div&gt;	</pre><p>制作触发器时可以用a元素，也可以用button元素，关键是要为其声明属性data-toggle="collapse"和data-target="*"（对应折叠区的选择器）	<br>折叠区需要添加类<code>.collapse</code>如果需要默认为显示状态，还要追加类<code>.in</code></p><div><a class="btn btn-primary" href="#collapse10" role="button" data-toggle="collapse">链接</a><button class="btn btn-primary" type="button" data-target="#collapse20" data-toggle="collapse"> 按钮</button><div class="collapse in well" id="collapse10">链接对应的折叠区</div><div class="collapse well" id="collapse20">按钮对应的折叠区 </div></div><pre>&lt;a class="btn btn-primary" href="#collapse10" role="button" data-toggle="collapse"&gt;链接&lt;/a&gt;

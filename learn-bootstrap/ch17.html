@@ -30,7 +30,7 @@
 	//- border-radius: 0 0 4px 4px;
 }
 #scrollSpy ul.nav-tabs{
-	top: 0; /* Set the top position of pinned element */
+	top: 0	; /* Set the top position of pinned element */
 }
 </style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第十七章 滚动监听</h2><p class="lead">根据滚动条所处位置，自动更新导航项样式，对其高亮，下拉菜单也会高亮。<br><a class="text-info" href="scrollsply.html" target="_blank"> 演示页面</a></p><h3 class="text-primary">17.1 ID一致</h3><p>导航中链接的地址，需要对应被导航内容中的ID属性，比如</p><pre> &lt;a href="#home"&gt;主页	&lt;/a&gt;	
 &lt;div id="home"&gt;...&lt;/div&gt;	</pre><p class="text-warning">不可见元素（jQuery中的not:visible）不会被监听，并且相对应的导航项目也不会高亮。</p><h3 class="text-primary">17.2 相对定位</h3><p>被监听的对象必须相对定位，并且设置高度，overflow设置为scroll：</p><pre> #scrollSpied{

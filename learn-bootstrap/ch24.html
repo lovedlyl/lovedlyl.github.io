@@ -30,6 +30,6 @@
 	//- border-radius: 0 0 4px 4px;
 }
 #scrollSpy ul.nav-tabs{
-	top: 0; /* Set the top position of pinned element */
+	top: 0	; /* Set the top position of pinned element */
 }
-</style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第二十四章 固定定位（Affix）</h2></div></div></div></body></html>
+</style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第二十四章 固定定位（Affix）</h2><p class="lead">为元素实现固定定位</p><h3 class="text-primary">24.1 实现过程</h3><ol> <li>为元素设置data-spy="affix"属性，表示元素固定不变</li><li>设置data-offset属性，取值整数。如data-offset=90，表示top和bottom分别为90。也可以分别设置data-offset-top和data-offset-bottom：<ul> <li> <strong>data-offset-top</strong>表示当页面从顶部开始滚动，滚动距离大于90px时，affix元素不再滚动，固定在页面。</li><li> <strong>data-offset-bottom</strong>与data-offset-top相反。</li></ul></li></ol><pre>&lt;ul class="nav nav-pills nav-stacked" data-spy="affix" data-offset-top="90" data-offset-bottom="120"&gt;&lt;/ul&gt;</pre></div></div></div></body></html>

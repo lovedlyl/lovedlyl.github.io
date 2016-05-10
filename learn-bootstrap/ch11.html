@@ -30,7 +30,7 @@
 	//- border-radius: 0 0 4px 4px;
 }
 #scrollSpy ul.nav-tabs{
-	top: 0; /* Set the top position of pinned element */
+	top: 0	; /* Set the top position of pinned element */
 }
 </style><script src="scripts/bootstrap.js"></script><script src="scripts/index.js"></script></head><body class="container"><div class="row"><div class="col-xs-12 col-sm-12 col-md-9 col-lg-9"><h1><a class="text-info" href="index.html">Bootstrap 学习笔记</a></h1><div class="content"><h2 class="text-primary">第十一章 进度条</h2><h3 class="text-primary">10.1 基本样式</h3><p> <strong>实现原理：</strong>类为<code>.progress</code>的div中嵌入类为<code>.progress-bar</code>的div，对其设置内联样式宽度即可。</p><p> <strong>基本结构：</strong><kbd>.progress > .progress-bar(style="width: ??%")</kbd><div class="progress"><div class="progress-bar" style="width: 30%"></div></div></p><p> <strong>结构优化：</strong>为了方便视觉障碍者，可以将结构优化<pre> &lt;div class="progress"&gt;
 	&lt;div class="progress-bar" style="width:40%;" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"&gt;
