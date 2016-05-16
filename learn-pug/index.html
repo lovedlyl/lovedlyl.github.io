@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags --><title>pug（jade） 文档</title><link rel="shortcut icon" href="images/one-pounch-man.png">		<!-- Bootstrap -->
+<link href="styles/bootstrap.min.css" rel="stylesheet"><style>body{
+	padding: 50px 0;
+}</style><!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body><div class="container"><h1 class="text-primary center-block" style="width:500px">pug（jade） 文档</h1><h2 class="text-primary">属性</h2><p>标签属性看起来同HTML属性一样，不过实际上是JavaScript表达式</p><div class="row"><div class="col-md-6"><pre>a(href="google.com") google
+a(class="button" href="google.com") Google</pre></div><div class="col-md-6"><pre>&lt;a href="google.com"&gt;Google&lt;/a&gt;&lt;a class="button" href="google.com"&gt;Google&lt;/a&gt;</pre></div></div><p>所有正常的JS表达式都可以使用</p><div class="row"><div class="col-md-6"><pre>- var authenticated = true
+body(class=authenticated? "auth": "anon")</pre></div><div class="col-md-6"><pre>&lt;body class="auth"&gt;&lt;/body&gt;</pre></div></div><p>如果有多个属性，可以跨行书写</p><div class="row"><div class="col-md-6"><pre>input(
+	type="checkbox"
+	name="agreement"
+	checked
+)</pre></div><div class="col-md-6"><pre>&lt;input type="checkbox" name="agreement" checked="checked"/&gt;</pre></div></div><h3 class="text-primary">转义属性</h3><p>默认情况下，所有字符都会被转义，如果不需要转义，使用<code>!=</code>代替<code>=</code></p><div class="row"><div class="col-md-6"><pre>div(escapged="&lt;code&gt;")
+div(unespaced!="&lt;code&gt;")</pre></div><div class="col-md-6"><pre>&lt;div escapged="#lt;code#gt;"&gt;&lt;/div&gt;
+&lt;div unespaced="&lt;code&gt;"&gt;&lt;/div&gt;</pre></div></div><div class="row"><div class="col-md-6"><div class="panel panel-danger"><div class="panel-heading">危险</div><p class="panel-body"> 非转义字符非常危险，处理用户输入信息时一定要转义语义化</p></div></div></div><h3 class="text-primary">布尔值属性</h3><p>支持布尔值常量<code>true</code>和<code>false</code>如果没有传递，则默认为<code>true</code></p><div class="row"><div class="col-md-6"><pre>input(type="checkbox" checked)
+input(type="checkbox" checked=true)
+input(type="checkbox" checked=false)
+input(type="checkbox" checked=true.toString())</pre></div><div class="col-md-6"><pre>&lt;input type="checkbox" checked="checked" /&gt;
+&lt;input type="checkbox" checked="checked" /&gt;
+&lt;input type="checkbox" /&gt;
+&lt;input type="checkbox" checked="true"/&gt;</pre></div></div><p>如果有doctype声明为html，则采用所有浏览器都识别的语法方式</p><div class="row"><div class="col-md-6"><pre>input(type="checkbox" checked)
+input(type="checkbox" checked=true)
+input(type="checkbox" checked=false)
+input(type="checkbox" checked=true && "checked")</pre></div><div class="col-md-6"><pre>&lt;input type="checkbox" checked="checked" &gt;
+&lt;input type="checkbox" checked="checked" &gt;
+&lt;input type="checkbox" &gt;
+&lt;input type="checkbox" checked="checked"&gt;</pre></div></div><h3 class="text-primary">style属性</h3><p><code>style</code>属性可以是一般的字符串属性，也可以是JS对象</p><div class="row"><div class="col-md-6"><pre>a(style={color: "red", "font-size": "12px"})</pre></div><div class="col-md-6"><pre>&lt;a style="color:red;font-size:12px"&gt;&lt;/a&gt;</pre></div></div><h3 class="text-primary">class属性</h3><p><code>class</code>属性可以是一般的字符串属性，也可以是数组，并且支持叠加</p><div class="row"><div class="col-md-6"><pre>- var classes = ["foo", "bar", "baz"]
+a(class=classes)
+a(class=classes class="bing")</pre></div><div class="col-md-6"><pre>&lt;a class="foo bar baz"&gt;&lt;/a&gt;&lt;a class="foo bar baz bing"&gt;&lt;/a&gt;		</pre></div></div><p>并且还支持按条件添加类</p><div class="row"><div class="col-md-6"><pre>- var currentUrl = "/about"
+a(class={active: currentUrl==="/a"}) home
+a(class={active: currentUrl==="/about"}) about</pre></div><div class="col-md-6"><pre>&lt;a&gt;home&lt;/a&gt;&lt;a class="active"&gt;about&lt;/a&gt;</pre></div></div><h3 class="text-primary">class字面量</h3><p>声明类可以采用<code>.className</code>的形式</p><div class="row"><div class="col-md-6"><pre>a.button</pre></div><div class="col-md-6"><pre>&lt;a class="button"&gt;&lt;/a&gt;</pre></div></div><p>对于DIV标签也可以采用直接写类名的形式</p><div class="row"><div class="col-md-6"><pre>.content</pre></div><div class="col-md-6"><pre>div class="content"&gt;</pre></div></div><h3 class="text-primary">ID字面量</h3><p>声明ID属性采用<code>#idName</code>的形式，</p><div class="row"><div class="col-md-6"><pre>a#mani-link</pre></div><div class="col-md-6"><pre>&lt;a id="mani-link"&gt;&lt;/a&gt;</pre></div></div><p>对于DIV标签也可以采用直接写ID名的形式</p><div class="row"><div class="col-md-6"><pre>#content</pre></div><div class="col-md-6"><pre>&lt;div id="content"&gt;&lt;/div&gt;</pre></div></div><h3 class="text-primary">&attributes</h3><p><code>&attributes</code>属可以用来为标签追加属性</p><div class="row"><div class="col-md-6"><pre>#foo(data-foo="bar")&attributes({"data-bar": "foo"})</pre></div><div class="col-md-6"><pre>&lt;div id="foo" data-foo="bar" data-bar="foo"&gt;&lt;/div&gt;</pre></div></div><p>还可以是表示对象的变量</p><div class="row"><div class="col-md-6"><pre>-var attributes = {"data-bar": "foo"}
+#foo(data-foo="bar")&attributes(attributes)</pre></div><div class="col-md-6"><pre>&lt;div id="foo" data-foo="bar" data-bar="foo"&gt;&lt;/div&gt;</pre></div></div><div class="row"><div class="col-md-6"><div class="panel panel-danger"><div class="panel-heading">危险</div><p class="panel-body">使用<code>&attributes</code>属性不会自动转义，不过在混合器中调用时会自定转义。</p></div></div></div><br/><hr/><br/><h2 class="text-primary">Case</h2><p>有点像JS中的case语句，不过形式略有不同</p><div class="row"><div class="col-md-6"><pre>- var friends = 10
+case friends
+	when 0
+		p you have no friends
+	when 1
+		p you have a friend
+	default
+		p you hanve  friends</pre></div><div class="col-md-6"><pre>&lt;p&gt;you hanve 10 friends&lt;/p&gt;</pre></div></div><h3 class="text-primary">默认不中断</h3><p>默认不中断可以将多个<code>when</code>连续在一起</p><div class="row"><div class="col-md-6"><pre>- var friends = 1
+case friends
+	when 0
+	when 1
+		p you have few friends
+	default
+		p you have  friends</pre></div><div class="col-md-6"><pre>&lt;p&gt;you have few friends&lt;/p&gt;</pre></div></div><h3 class="text-primary">块扩展</h3><p>也可使用块扩展的形式</p><div class="row"><div class="col-md-6"><pre>- var friends = 1
+case friends
+	when 0: p you have no friends
+	when 1: p you have a friend
+	default: p you have  friends</pre></div><div class="col-md-6"><pre>&lt;p&gt;you have a friend&lt;/p&gt;</pre></div></div><br/><hr/><br/><h2 class="text-primary">JS表达式</h2><p>在pug中可嵌入JS代码，有下面三种形式</p><h3 class="text-primary">unbuffered 表达式</h3><p>如果代码以<code>-</code>开始，不会像结果输出任何内容</p><div class="row"><div class="col-md-6"><pre>- for (var x = 0; x&lt;3; x++)
+	li item</pre></div><div class="col-md-6"><pre>&lt;li&gt;item&lt;/li&gt;
+&lt;li&gt;item&lt;/li&gt;
+&lt;li&gt;item&lt;/li&gt;</pre></div></div><p>同样也支持块状unbuffered表达式</p><div class="row"><div class="col-md-6"><pre>- 
+	list = ["a", "b",
+		 "c", "d"
+		 ,"e"]
+each i in list
+	li= i</pre></div><div class="col-md-6"><pre>&lt;li&gt;a&lt;/li&gt;
+&lt;li&gt;b&lt;/li&gt;
+&lt;li&gt;c&lt;/li&gt;
+&lt;li&gt;d&lt;/li&gt;
+&lt;li&gt;e&lt;/li&gt;	</pre></div></div><h3 class="text-primary">buffered 表达式		</h3><p>如果表达式以<code>=</code>开始，将会被evaluated，而且还会转义</p><div class="row"><div class="col-md-6"><pre>p= "this is《espaced》"
+p= "this is " + "《escaped》"</pre></div><div class="col-md-6"><pre>&lt;p&gt;this is #lt;espaced#gt;&lt;/p&gt;
+&lt;p&gt;this is #lt;escaped#gt;&lt;/p&gt;</pre></div></div><h3 class="text-primary">非转义buffered 表达式	</h3><p>如果将<code>=</code>换成<code>！=</code>，JS表达式也会被evaluated，但不会被转义</p><div class="row"><div class="col-md-6"><pre>p!= "this is 《espaced》"
+p!= "this is " + "《escaped》"</pre></div><div class="col-md-6"><pre>&lt;p&gt;this is &lt;espaced&gt;&lt;/p&gt;
+&lt;p&gt;this is &lt;escaped&gt;&lt;/p&gt;</pre></div></div><div class="row"><div class="col-md-6"><div class="panel panel-danger"><div class="panel-heading">危险</div><p class="panel-body">非转义buffered代码非常危险，必须对用户输入信息转义。</p></div></div></div><br/><hr/><br/><h2 class="text-primary">注释</h2><p>被编译的注释"//"</p><div class="row"><div class="col-md-6"><pre>// 我会被编译
+p foo
+p bar</pre></div><div class="col-md-6"><pre>&lt;!-- 我会被编译--&gt;
+&lt;p&gt;foo&lt;/p&gt;
+&lt;p&gt;bar&lt;/p&gt;</pre></div></div><p>不会被编译的注释“//-”</p><div class="row"><div class="col-md-6"><pre>//- 我不会被编译
+p foo
+p bar</pre></div><div class="col-md-6"><pre>&lt;p&gt;foo&lt;/p&gt;
+&lt;p&gt;bar&lt;/p&gt;</pre></div></div><h3 class="text-primary">块状注释</h3><p>同样支持块状注释</p><div class="row"><div class="col-md-6"><pre>body
+	//
+		as much text
+		can go here </pre></div><div class="col-md-6"><pre>&lt;body&gt;
+	&lt;!-- as much text can go here --&gt;
+&lt;/body&gt;</pre></div></div><h3 class="text-primary">条件注释</h3><p>pug 不支持条件注释，使用原生的HTML字符串即可</p><div class="row"><div class="col-md-6"><pre>&lt;!--[if IE 8]&gt;
+&lt;html lang="en" class="lt-ie9"&gt;
+&lt;![endif]--&gt;
+&lt;!--[if gt IE 8]&gt;&lt;!--&gt;
+&lt;html lang="en"&gt;
+&lt;!--&lt;![endif]--&gt;</pre></div><div class="col-md-6"><pre>&lt;!--[if IE 8]&gt;
+&lt;html lang="en" class="lt-ie9"&gt;
+&lt;![endif]--&gt;
+&lt;!--[if gt IE 8]&gt;&lt;!--&gt;
+&lt;html lang="en"&gt;
+&lt;!--&lt;![endif]--&gt;			</pre></div></div><br/><hr/><br/><h2 class="text-primary">条件语句</h2><p>pug支持JS的条件语句，不过可以省略括号</p><div class="row"><div class="col-md-6"><pre>- var user = {description: "foo bar baz"}
+- var authorised = false		
+#user
+	if user.description
+		h2 Description
+		p.description= user.description
+	else if authorised
+		h2 Description
+		p.description.
+			User has no description,
+			why not add on...
+	else
+		h1 Description
+		p.description User has no description</pre></div><div class="col-md-6"><pre>&lt;h2&gt;Description&lt;/h2&gt;
+&lt;p class="description"&gt;foo bar baz&lt;/p&gt;</pre></div></div><p>另外还支持<code>unless</code>语句</p><div class="row"><div class="col-md-6"><pre>unless user.isAnonymous
+	p you are login as ${user.name}</pre></div><div class="col-md-6"><pre>if !user.isAnonymous
+	p you are login as ${user.name}			</pre></div></div><br/><hr/><br/><h2 class="text-primary">Doctype</h2><div class="row"><div class="col-md-6"><pre>doctype html</pre></div><div class="col-md-6"><pre>&lt;!DOCTYPE html&gt;</pre></div></div><h3 class="text-primary">doctype 快捷方式</h3><p>doctype html</p><pre>&lt;!DOCTYPE html&gt;</pre><p>doctype xml</p><pre>&lt;?xml version="1.0" encoding="utf-8" ?&gt;</pre><p>doctype transitional</p><pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</pre><p>doctype strict</p><pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;</pre><p>doctype frameset</p><pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;</pre><p>doctype 1.1</p><pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;</pre><p>doctype basic</p><pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd"&gt;</pre><p>doctype mobile</p><pre>&lt;!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd"&gt;</pre><h3 class="text-primary">doctype 定制化</h3><p>也可以定制化自己的doctype, 比如：</p><div class="row"><div class="col-md-6"><pre>doctype html my "custom doctype"</pre></div><div class="col-md-6"><pre> &lt;!DOCTYPE html my "custom doctype"&gt;</pre></div></div><br/><hr/><br/><h2 class="text-primary">模板继承</h2><p>使用<code>extends</code>可以继承模板，并且覆盖一定义的块</p><div class="row"><div class="col-md-6"><pre>//- layout.jade
+doctype html
+html
+ head
+   block title
+     title Default title
+ body
+   block content</pre></div><div class="col-md-6"><pre>&lt;!doctype html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;title&gt;Article Title&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+   &lt;h1&gt;My Article&lt;/h1&gt;
+ &lt;/body&gt;
+&lt;/html&gt;	</pre></div></div><div class="row"><div class="col-md-6"><pre>//- index.jade
+extends ./layout.jade
+block title
+ title Article Title
+block content
+ h1 My Article	</pre></div></div><div class="row"><div class="col-md-6"><div class="panel panel-info"><div class="panel-heading">注意</div><p class="panel-body">可以多层继承</p></div></div></div><br/><hr/><br/><h2 class="text-primary">过滤器（？？）</h2><br/><hr/><br/><h2 class="text-primary">include 包含</h2><p>利用<code>include</code>关键字可以包含其它文件中的内容</p><div class="row"><div class="col-md-6"><pre>//- index.jade
+doctype html
+html
+ include ./includes/head.jade
+ body
+   h1 My Site
+   p Welcome to my super lame site.
+   include ./includes/foot.jade	</pre></div><div class="col-md-6"><pre>&lt;!doctype html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;title&gt;My Site&lt;/title&gt;
+   &lt;script src='/javascripts/jquery.js'&gt;&lt;/script&gt;
+   &lt;script src='/javascripts/app.js'&gt;&lt;/script&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+   &lt;h1&gt;My Site&lt;/h1&gt;
+   &lt;p&gt;Welcome to my super lame site.&lt;/p&gt;
+   &lt;div id="footer"&gt;
+     &lt;p&gt;Copyright (c) foobar&lt;/p&gt;
+   &lt;/div&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre></div></div><div class="row"><div class="col-md-6"><pre>//- includes/head.jade
+head
+ title My Site
+ script(src='/javascripts/jquery.js')
+ script(src='/javascripts/app.js')</pre></div></div><div class="row"><div class="col-md-6"><pre>//- includes/foot.jade
+#footer
+ p Copyright (c) foobar	</pre></div></div><h3 class="text-primary">纯文本</h3><p>还可以引入纯文本内容</p><div class="row"><div class="col-md-6"><pre>//- index.jade
+doctype html
+html
+ head
+   style
+     include style.css
+ body
+   h1 My Site
+   p Welcome to my super lame site.
+   script
+     include script.js</pre></div><div class="col-md-6"><pre>&lt;!doctype html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;style&gt;
+     /* style.css */
+     h1 { color: red; }
+   &lt;/style&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+   &lt;h1&gt;My Site&lt;/h1&gt;
+   &lt;p&gt;Welcome to my super lame site.&lt;/p&gt;
+   &lt;script&gt;
+     // script.js
+     console.log('You are awesome');
+   &lt;/script&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre></div></div><div class="row"><div class="col-md-6"><pre>/* style.css */
+h1 { color: red; }</pre></div></div><div class="row"><div class="col-md-6"><pre>// script.js
+console.log('You are awesome');				      </pre></div></div><h3 class="text-primary">过滤文档</h3><p>也可引入过滤文档</p><div class="row"><div class="col-md-6"><pre>//- index.jade
+doctype html
+html
+ head
+   title An Article
+ body
+   include:markdown article.md</pre></div><div class="col-md-6"><pre>&lt;!doctype html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+   &lt;title&gt;An Article&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+   &lt;h1&gt;article.md&lt;/h1&gt;
+   &lt;p&gt;This is an article written in markdown.&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;		</pre></div></div><div class="row"><div class="col-md-6"><pre># article.md
+This is an article written in markdown.		</pre></div></div><br/><hr/><br/><h2 class="text-primary">模板继承</h2><p>pug通过<code>block</code>和<code>extends</code>两个关键字完成继承。如果子模板中的有<code>block</code>重复，则覆盖。</p><p>layout.pug</p><pre>html
+ head
+   title My Site - 
+   block scripts
+     script(src='/jquery.js')
+ body
+   block content
+   block foot
+     #footer
+       p some footer content</pre><p>如果page-a.pug需要继承layout.pug，只需在声明 <code>extends layout</code>即可，注意page-a.pug中没有声明foot块，也会出现在编译文档中</p><p>page-a.pug</p><pre>extends ./layout.jade	
+block scripts
+ script(src='/jquery.js')
+ script(src='/pets.js')	
+block content
+ h1= title
+ each pet in pets
+   include pet</pre><h3 class="text-primary">追加</h3><p>如果需要在继承的默认块上追加内容，可以使用<code>append</code>和<code>preppend</code>关键字</p><p>page-b.pug</p><pre>extends layout
+append scripts
+ script(src='/vendor/three.js')
+ script(src='/game.js')</pre><br/><hr/><br/><h2 class="text-primary">插入</h2><h3 class="text-primary">字符串插入，转义</h3><p>使用<code>“=”</code>或字符串中使用插入符号<code>”#{}“</code>可以实现变量插入。并且会自动转义。</p><div class="row"><div class="col-md-6"><pre>- var title = "pug"
+- var name = "claudio"
+- var desc = "learn"
+- var escape = "&lt;span&gt;espace!&lt;/span&gt;"
+h1= title
+p I am #{name}, #{desc}ing #{title}, #{escape}</pre></div><div class="col-md-6"><pre>&lt;h1&gt;pug&lt;/h1&gt;
+&lt;p&gt;I am claudio, learning pug, #lt;span#gt;espace!#lt;/span#gt;&lt;/p&gt;	</pre></div></div><p>还可以在<code>”#{}“</code>中调用JS</p><div class="row"><div class="col-md-6"><pre>- var name = "claudio"
+p my name is #{name.toUpperCase()}</pre></div><div class="col-md-6"><pre>&lt;p&gt;my name is CLAUDIO&lt;/p&gt;</pre></div></div><h3 class="text-primary"> 字符串插入，非转义</h3><p>也可使用字符串的非转义方式，只需将<code>#{}</code>替换为<code>\！{}</code>即可。</p><div class="row"><div class="col-md-6"><pre>- var risk = "&lt;em&gt;this is Risk!&lt;/em&gt;"
+p use unescape, ！{risk}</pre></div><div class="col-md-6"><pre>&lt;p&gt;use unescape, &lt;em&gt;this is Risk!&lt;/em&gt;&lt;/p&gt;</pre></div></div><h3 class="text-primary">大段纯文本插入</h3><p>插入大段纯文本时，用<code>标签.</code>的形式：</p><div class="row"><div class="col-md-6"><pre>p.
+	this is claudio,
+	who am i,
+	where am i going,
+	where am i from</pre></div><div class="col-md-6"><pre>&lt;p&gt;
+ this is claudio,
+ who am i,
+ where am i going,
+ where am i from
+&lt;/p&gt;	</pre></div></div><br/><hr/><br/><h2 class="text-primary">历遍</h2><p>pug支持的历遍方式有<code>each</code>，<code>for</code>和<code>while</code></p><h3 class="text-primary">each</h3><div class="row"><div class="col-md-6"><pre>ul
+	each val in [1,2,3]
+		li= val</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;1&lt;/li&gt;
+ &lt;li&gt;2&lt;/li&gt;
+ &lt;li&gt;3&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><p>并且还可获取索引</p><div class="row"><div class="col-md-6"><pre>ul
+	each val, index in ["a", "b", "c"]
+		li #{index + ": " + val}</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;0: a&lt;/li&gt;
+ &lt;li&gt;1: b&lt;/li&gt;
+ &lt;li&gt;2: c&lt;/li&gt;
+&lt;/ul&gt;	</pre></div></div><p>以及对对象历遍的支持</p><div class="row"><div class="col-md-6"><pre>- var fruits = {apple: 23, banana: 21}
+ul
+	each num, val in fruits
+		li= val + ": " + num</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;apple: 23&lt;/li&gt;
+ &lt;li&gt;banana: 21&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><p>也支持JS调用</p><div class="row"><div class="col-md-6"><pre>- var values = []
+ul
+	each i in values.length ? value: [1, 2,3]
+		li= i</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;1&lt;/li&gt;
+ &lt;li&gt;2&lt;/li&gt;
+ &lt;li&gt;3&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><p>也可使用<code>for</code>代替<code>each</code></p><div class="row"><div class="col-md-6"><pre>- var values = []
+ul
+	- for (var i=0; i<3; i++)
+		li= i</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;1&lt;/li&gt;
+ &lt;li&gt;2&lt;/li&gt;
+ &lt;li&gt;3&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><h3 class="text-primary">while</h3><p>也可使用<code>while</code>创建循环</p><div class="row"><div class="col-md-6"><pre>- var i = 0
+ul
+	while (i < 3)
+		li= i
+		-i++</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;1&lt;/li&gt;
+ &lt;li&gt;2&lt;/li&gt;
+ &lt;li&gt;3&lt;/li&gt;
+&lt;/ul&gt;				</pre></div></div><br/><hr/><br/><h2 class="text-primary">mixin 混合器</h2><p>混合器最大的好处就是提供代码重用</p><div class="row"><div class="col-md-6"><pre>//- decalaration
+mixin list
+	ul
+		li far
+		li bar
+		li baz
+//- use
++list
++list</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;far&lt;/li&gt;
+ &lt;li&gt;bar&lt;/li&gt;
+ &lt;li&gt;baz&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+ &lt;li&gt;far&lt;/li&gt;
+ &lt;li&gt;bar&lt;/li&gt;
+ &lt;li&gt;baz&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><p>混合器实质上是被编译为函数，所以可以带参数</p><div class="row">mixin pet(name)
+		li.pet= name
+ul
+	+pet("dog")
+	+pet("cat")
+	+pet("pig")<div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li class="pet"&gt;dog&lt;/li&gt;
+ &lt;li class="pet"&gt;cat&lt;/li&gt;
+ &lt;li class="pet"&gt;pig&lt;/li&gt;
+&lt;/ul&gt;	</pre></div></div><h3 class="text-primary">混合器block</h3><p>调用混合器时，可以为其添加一个pug块，使其作为混合器新增内容</p><div class="row"><div class="col-md-6"><pre>mixin article(title)
+	.article
+		.article-wrapper
+			h1= title
+			if block
+				block
+			else
+				p no content provided
++article("hello")
++article("hello")
+	P this is claudio
+	p learing pug</pre></div><div class="col-md-6"><pre>&lt;div class="article"&gt;
+ &lt;div class="article-wrapper"&gt;
+   &lt;h1&gt;hello&lt;/h1&gt;
+   &lt;p&gt;no content provided&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="article"&gt;
+ &lt;div class="article-wrapper"&gt;
+   &lt;h1&gt;hello&lt;/h1&gt;
+   &lt;P&gt;this is claudio&lt;/P&gt;
+   &lt;p&gt;learing pug&lt;/p&gt;
+ &lt;/div&gt;
+&lt;/div&gt;	</pre></div></div><h3 class="text-primary">混合器attributes</h3><p>使用常量<code>attributes</code>可获得调用混合器时传递的所有属性</p><div class="row"><div class="col-md-6"><pre>mixin link(name, href)
+	a(class=attributes.class href=href)= name
++link("foo", "/foo")(class="btn")</pre></div><div class="col-md-6"><pre>&lt;a class="btn" href="/foo"&gt;foo&lt;/a&gt;</pre></div></div><p>也可以使用<code>&attributes</code>传递所有属性</p><div class="row"><div class="col-md-6"><pre>mixin link(name, href)
+	a(href=href)&attributes(attributes)= name
++link("bar", "/bar")(data-toggle="collapse", data-target="#id")</pre></div><div class="col-md-6"><pre>&lt;a href="/bar" data-toggle="collapse" data-target="#id"&gt;bar&lt;/a&gt;</pre></div></div><p>对于类<code>.class</code>可以不必在括号内传递</p><div class="row"><div class="col-md-6"><pre>mixin link(name, href)
+	a(href=href)&attributes(attributes)= name
++link("bar", "/bar")(data-toggle="collapse", data-target="#id").btn</pre></div><div class="col-md-6"><pre> &lt;a class="btn" href="/bar" data-toggle="collapse" data-target="#id"</pre></div></div><h3 class="text-primary">缺省参数</h3><p>如果参数不可知，可以用下列方式声明混合器</p><div class="row"><div class="col-md-6"><pre>mixin my-list(id, ...items)
+	ul(id=id)
+		each item in items
+			li= item
++my-list("my-list", 1,2,3)</pre></div><div class="col-md-6"><pre>&lt;ul id="my-list"&gt;
+ &lt;li&gt;1&lt;/li&gt;
+ &lt;li&gt;2&lt;/li&gt;
+ &lt;li&gt;3&lt;/li&gt;
+&lt;/ul&gt;	</pre></div></div><br/><hr/><br/><h2 class="text-primary">纯文本</h2><p>pug提供了3种文本书写方式</p><h3 class="text-primary">管道（pipe）文本</h3><p>在文档中插入文本的最简单方式就是将文本置于<code>|</code>后</p><div class="row"><div class="col-md-6"><pre>| Plain text can include &lt;strong&gt;html&lt;/strong&gt;
+p
+	| It must always be on its own line</pre></div><div class="col-md-6"><pre>Plain text can include &lt;strong&gt;html&lt;/strong&gt;
+&lt;p&gt;It must always be on its own line&lt;/p&gt;</pre></div></div><h3 class="text-primary">也可将文本直接置于文本后</h3><div class="row"><div class="col-md-6"><pre>p Plain text can include &lt;strong&gt;html&lt;/strong&gt;</pre></div><div class="col-md-6"><pre>&lt;p&gt;Plain text can include &lt;strong&gt;html&lt;/strong&gt;&lt;/p&gt;</pre></div></div><h3 class="text-primary">块文本</h3><p>如果文本过多，可以在标签后添加<code>.</code>，然后将文本换行按缩进书写</p><div class="row"><div class="col-md-6"><pre>script.
+	if(usingPug)
+		console.log("hello")
+	else
+		console.log("try it")</pre></div><div class="col-md-6"><pre>&lt;script&gt;
+ if(usingPug)
+ 	console.log("hello")
+ else
+ 	console.log("try it")
+&lt;/script&gt;</pre></div></div><br/><hr/><br/><h2 class="text-primary">标签</h2><p>pug中默认行首为标签，缩进表示嵌套</p><div class="row"><div class="col-md-6"><pre>ul
+	li item a
+	li item b
+	li item c</pre></div><div class="col-md-6"><pre>&lt;ul&gt;
+ &lt;li&gt;item a&lt;/li&gt;
+ &lt;li&gt;item b&lt;/li&gt;
+ &lt;li&gt;item c&lt;/li&gt;
+&lt;/ul&gt;</pre></div></div><p>pug可自动识别自关闭标签</p><div class="row"><div class="col-md-6"><pre>img</pre></div><div class="col-md-6"><pre>&lt;img/&gt;</pre></div></div><p>为了节省空间，还可将嵌套的标签写在一行内</p><div class="row"><div class="col-md-6"><pre>a: img</pre></div><div class="col-md-6"><pre>&lt;a&gt;&lt;img/&gt;&lt;/a&gt;</pre></div></div><p>虽然pug可以自动识别自合闭标签，如果需要认为改变，可以在标签后添加<code>/</code>实现标签自合闭</p><div class="row"><div class="col-md-6"><pre>div/
+foo/
+foo(bar="baz")/</pre></div><div class="col-md-6"><pre>&lt;div/&gt;
+&lt;foo/&gt;
+&lt;foo bar="baz"/&gt;</pre></div></div><br/><hr/><br/><h3 class="text-primary">附录</h3><p><strong>如何使sublime支持pug语法：<kbd>View -> Syntax -> Open all with current extension as... ->[your syntax choice]</kbd></strong></p></div><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+<!-- Include all compiled plugins (below), or include individual files as needed --><script src="scripts/bootstrap.js"></script></body>
+</html>
