@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/main.css">
+<title>忘记密码</title>
+</head>
+<body>
+<div class="container">
+<header class="header clearfix"><span class="icon icon-circle">&lsaquo;</span>
+<h1>忘记密码</h1><a class="regist" href="#">注册</a>
+</header>
+</div>
+<p class="lead">请填写身份验证信息</p>
+<div class="container">
+<form name="id-details">
+<div class="form-group">
+<label for="name">姓名</label>
+<input id="name" type="text" placeholder="请填写真实姓名" required>
+</div>
+<div class="form-group select">
+<label for="card-type">证件类型</label>
+<ul id="card-type">
+<li class="on" id="id-card">身份证</li>
+<li id="passport">护照</li>
+<li id="soldier-card">军官证或士兵证</li>
+<li id="hkm-passort">港澳通行证/回乡证/台胞证</li>
+<li id="residence-booklet">户口本</li>
+<li id="others">其他</li>
+</ul><span class="icon">&rsaquo;</span>
+</div>
+<div class="form-group">
+<label for="num">证件号</label>
+<input id="num" type="text" placeholder="输入一账通新密码" required>
+</div>
+<div class="form-group select">
+<label for="gender">性别</label>
+<ul id="gender">
+<li class="on" id="female">女士</li>
+<li id="male">先生</li>
+</ul><span class="icon">&rsaquo;</span>
+</div>
+<div class="form-group">
+<label form="date-of-birth">生日</label>
+<input type="date" placeholder="YY-MM-DD" required>
+</div>
+<input class="btn btn-info" type="submit" value="提交">
+</form>
+</div>
+<div class="modal">
+<div class="finish">
+<div class="container"><span class="icon icon-circle">&lsaquo;</span>
+<button class="finished">完成</button>
+</div>
+<ul class="choose"></ul>
+</div>
+</div>
+<script src="js/zepto.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

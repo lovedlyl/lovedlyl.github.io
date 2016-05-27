@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/main.css">
+<title>忘记密码</title>
+</head>
+<body>
+<div class="container">
+<header class="header clearfix"><span class="icon icon-circle">&lsaquo;</span>
+<h1>忘记密码</h1><a class="regist" href="#">注册</a>
+</header>
+</div>
+<p class="lead">请输入手机号码</p>
+<div class="container">
+<form name="phone-validate">
+<div class="form-group">
+<label for="phone">手机号</label>
+<input id="phone" type="tel" placeholder="请输入注册手机号" required>
+</div>
+<div class="form-group">
+<label for="vcode">验证码</label>
+<input id="vcode" type="password" placeholder="请输入手机验证码" required>
+<button class="btn btn-default">获取验证码</button>
+</div>
+<input class="btn btn-info" type="submit" value="提交">
+</form>
+</div>
+<script src="js/zepto.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

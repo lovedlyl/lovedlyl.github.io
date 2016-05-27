@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/main.css">
+<title>忘记密码</title>
+</head>
+<body>
+<div class="container">
+<header class="header clearfix"><span class="icon icon-circle">&lsaquo;</span>
+<h1>忘记密码</h1><a class="regist" href="#">注册</a>
+</header>
+</div>
+<p class="lead">平安银行网银用户验证银行账户信息</p>
+<div class="container">
+<form name="acount-validate">
+<div class="form-group select">
+<label for="type">卡类型</label>
+<ul id="type">
+<li class="on" id="credit-card">借记卡/信用卡</li>
+<li id="yizhangtong">一账通卡</li>
+</ul><span class="icon">&rsaquo;</span>
+</div>
+<div class="form-group">
+<label for="num">卡号</label>
+<input id="num" type="text" placeholder="请输入卡号" required>
+</div>
+<div class="form-group">
+<label for="pwd">密码</label>
+<input id="pwd" type="password" placeholder="请输入交易密码" required>
+</div>
+<input class="btn btn-info" type="submit" value="提交">
+</form>
+</div>
+<div class="modal">
+<div class="finish">
+<div class="container"><span class="icon icon-circle">&lsaquo;</span>
+<button class="finished">完成</button>
+</div>
+<ul class="choose"></ul>
+</div>
+</div>
+<script src="js/zepto.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
