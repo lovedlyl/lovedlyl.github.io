@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="private">
 <link rel="stylesheet" href="css/main.css">
 <title>忘记密码</title>
 </head>
@@ -24,8 +25,8 @@
 <input id="name" type="text" placeholder="请填写真实姓名" required>
 </div>
 <div class="form-group select">
-<label for="card-type">证件类型</label>
-<ul id="card-type">
+<label for="vCardType">证件类型</label>
+<ul id="vCardType">
 <li class="on" id="id-card">身份证</li>
 <li id="passport">护照</li>
 <li id="soldier-card">军官证或士兵证</li>
@@ -35,8 +36,8 @@
 </ul><span class="icon">&rsaquo;</span>
 </div>
 <div class="form-group">
-<label for="num">证件号</label>
-<input id="num" type="text" placeholder="输入一账通新密码" required>
+<label for="vCardNum">证件号</label>
+<input id="vCardNum" type="text" placeholder="输入一账通新密码" required>
 </div>
 <div class="form-group select">
 <label for="gender">性别</label>
@@ -46,8 +47,8 @@
 </ul><span class="icon">&rsaquo;</span>
 </div>
 <div class="form-group">
-<label form="date-of-birth">生日</label>
-<input type="date" placeholder="YY-MM-DD" required>
+<label form="dateOfBirth">生日</label>
+<input id="dateOfBirth" type="date" placeholder="YY-MM-DD" required>
 </div>
 <input class="btn btn-info" type="submit" value="提交">
 </form>
