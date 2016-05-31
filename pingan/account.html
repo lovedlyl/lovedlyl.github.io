@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="private">
 <link rel="stylesheet" href="css/main.css">
 <title>忘记密码</title>
 </head>
@@ -36,6 +35,7 @@
 <label for="cardPwd">密码</label>
 <input id="cardPwd" type="password" placeholder="请输入交易密码" required>
 </div>
+<div class="clearfix"></div>
 <div class="warning">
 </div>
 <input class="btn btn-info" type="submit" value="提交">
@@ -43,11 +43,13 @@
 </div>
 <div class="modal">
 <div class="finish">
-<div class="container"><span class="icon icon-circle">&lsaquo;</span><span class="finished">完成</span></div>
+<div class="container"><span class="icon icon-circle close">&lsaquo;</span><span class="finished">完成</span></div>
 </div>
 <ul class="choose"></ul>
 </div>
 <script src="js/zepto.min.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/modal.js"></script>
 <script src="js/index.js"></script>
 </body>
 </html>
