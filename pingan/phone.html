@@ -1,1 +1,79 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>忘记密码</title></head><body><div class="container"><header class="header"><div class="row"><span class="icon icon-circle">&lsaquo;</span></div><h1>忘记密码</h1><a class="regist" href="#">注册</a></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">请输入手机号码</div></h2><div class="container"><form name="phone-validate"><div class="form-group"><label for="phoneNum">手机号</label><input id="phoneNum" type="tel" placeholder="请输入注册手机号"><span class="tooltip"><span class="info"></span><i class="tooltip-arrow"></i></span></div><div class="form-group vcode"><label for="vcode">验证码</label><input id="vcode" type="password" placeholder="请输入手机验证码"><span class="tooltip"><span class="info"></span><i class="tooltip-arrow"></i></span> <button class="btn btn-default">获取验证码</button></div><div class="clearfix"></div><div class="warning"></div><div class="btn btn-info" id="submit">提交</div></form></div><script src="js/zepto.min.js"></script><script src="js/validate.js"></script><script src="js/modal.js"></script><script src="js/tooltip.js"></script><script src="js/index.js"></script></body></html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>手机用户登录</title></head><body><div class="container"><header class="header"><div class="row"><button class="icon icon-circle" data-toggle="back">&lsaquo;</button></div><a class="regist" href="#">注册</a><h1>忘记密码</h1></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">请输入手机号码</div></h2><div class="container"><form name="phone-validate"><div class="form-group"><label for="phoneNo">手机号</label><input id="phoneNo" name="phoneNo" data-storage="phoneNo" data-validate="phoneNo" maxlength="11" placeholder="请输入手机号码"></div><div class="form-group vcode"><label for="validateNo">验证码</label><input id="validateNo" name="validateNo" type="password" placeholder="请输入手机验证码" data-storage="validateNo" data-validate="validateNo"> <button class="btn">获取验证码</button></div><button class="btn btn-info" id="submit">下一步</button></form></div><div class="modal"><div class="modal-dialog"><div class="modal-header">提醒！</div><div class="modal-content"></div><button class="modal-footer close">关闭</button></div><div class="modal-blackdrop"></div></div><script src="js/zepto.min.js"></script><script src="js/plugins.js"></script><script src="js/index.js"></script><script>$(function() {
+    // phone.html填写数据,电话号码，验证码
+    var phoneNo = $("#phoneNo");
+    var validateNo = $("#validateNo");
+    var form = $("form");
+    // 获取验证码
+    (function() {
+        var retry = function() {
+            clearInterval(timer);
+            duration = 60;
+            validateNoBtn.removeClass("disabled").text("重新获取");
+            validateNoBtn.on("tap", getValidateNo);
+        };
+        var getValidateNo = function(e) {
+            e.preventDefault();
+            // 首先验证电话号码格式是否正确，否则点击获取验证码按钮无效
+            if (phoneNo.hasClass("empty") || !phoneNo.hasClass("valid")) {
+                warning("请正确格式的填写手机号码！")
+                return;
+            }
+            validateNoBtn.addClass("disabled")
+                .off("tap", getValidateNo)
+                .text(duration + "秒后重试");
+            // 发送请求获取验证码
+            $.post({
+                url: "???????????????",
+                data: form.serialize(),
+                error: function(xhr) {
+                    warning("获取验证码失败！")
+                    retry();
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        timer = setInterval(function() {
+                            duration -= 1;
+                            validateNoBtn.text(duration + "秒后重试");
+                            if (duration <= 0) {
+                                retry()
+
+                            }
+                        }, 1000);
+                    }
+                    if (data.status == "fail") {
+                        retry();
+                    }
+                }
+            });
+
+        };
+        //..... 请求结束
+        var timer;
+        var validateNoBtn = validateNo.siblings('.btn');
+        var text = validateNoBtn.text();
+        // 多少秒后重试
+        var duration = 60;
+
+        validateNoBtn.on("tap", getValidateNo);
+
+    })();
+    // ....获取验证码结束
+    // 表单提交
+    (function() {
+        formSubmit.$$fire = function(e) {
+            // console.log("fire");
+            // console.log(form.serialize());
+            e.preventDefault();
+            formSubmit.$$required = [phoneNo, validateNo];
+            if (formSubmit.$$checked()) {
+                formSubmit.$$params = form.serialize();
+                formSubmit();
+            }
+        };
+
+        formSubmit.$$btn = $("#submit");
+        formSubmit.$$btn.on("tap", formSubmit.$$fire);
+    })();
+    // .....表单提交结束
+
+});</script></body></html>

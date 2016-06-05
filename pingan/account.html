@@ -1,1 +1,22 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>忘记密码</title></head><body><div class="container"><header class="header"><div class="row"><span class="icon icon-circle">&lsaquo;</span></div><h1>忘记密码</h1><a class="regist" href="#">注册</a></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">平安银行网银用户验证银行账户信息</div></h2><div class="container"><form name="acount-validate"><div class="form-group select"><label for="cardType">卡类型</label><ul id="cardType"><li class="on" id="credit-card">借记卡/信用卡</li><li id="yizhangtong">一账通卡</li></ul><span class="icon down">&rsaquo;</span></div><div class="form-group"><label for="cardNum">卡号</label><input id="cardNum" type="text" placeholder="请输入卡号"><span class="tooltip"><span class="info"></span><i class="tooltip-arrow"></i></span></div><div class="form-group"><label for="cardPwd">密码</label><input id="cardPwd" type="password" placeholder="请输入交易密码"><span class="tooltip"><span class="info"></span><i class="tooltip-arrow"></i></span></div><div class="clearfix"></div><div class="warning"></div><div class="btn btn-info" id="submit">提交</div></form></div><div class="modal"><div class="finish"><div class="container"><span class="icon icon-circle close">&lsaquo;</span><span class="finished">完成</span></div></div><ul class="choose"></ul></div><script src="js/zepto.min.js"></script><script src="js/validate.js"></script><script src="js/modal.js"></script><script src="js/tooltip.js"></script><script src="js/index.js"></script></body></html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>一账通登录</title></head><body><div class="container"><header class="header"><div class="row"><button class="icon icon-circle" data-toggle="back">&lsaquo;</button></div><a class="regist" href="#">注册</a><h1>忘记密码</h1></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">平安银行网银用户验证银行账户信息</div></h2><div class="container"><form name="acount-validate"><div class="form-group"><label for="cardType">卡类型</label><select id="cardType" name="cardType" disabled="disabled" data-toggle="dropdown" data-src="true" data-storage="cardType"><option value="0" selected="selected">借记卡/信用卡</option><option value="1">一账通卡</option></select><button class="icon" data-toggle="dropdown">&rsaquo;</button></div><div class="form-group"><label for="cardNo">卡号</label><input id="cardNo" name="cardNo" type="text" placeholder="请输入卡号" data-storage="cardNo" data-validate="bankNo"></div><div class="form-group"><label for="password">密码</label><input id="password" name="password" type="password" data-storage="password" placeholder="请输入交易密码" data-validate="bankPwd"></div><button class="btn btn-info" id="submit">下一步</button></form></div><div class="modal"><div class="modal-dialog"><div class="modal-header">提醒！</div><div class="modal-content"></div><button class="modal-footer close">关闭</button></div><div class="modal-blackdrop"></div></div><script src="js/zepto.min.js"></script><script src="js/plugins.js"></script><script src="js/index.js"></script><script>$(function() {
+    // 帐号页面数据.account.html,卡类型，卡号，卡密码
+    var cardType = $("#cardType"); 
+    var cardNo = $("#cardNo");
+    var password = $("#password");
+    // 表单提交
+    (function() {
+        // console.log("account.html");
+
+        formSubmit.$$fire = function(e) {
+            e.preventDefault();
+            formSubmit.$$required = [cardNo, password];
+            if (formSubmit.$$checked()) {
+                formSubmit.$$params = $("form").serialize();
+                formSubmit();
+            }
+        };
+        formSubmit.$$btn = $("#submit");
+        formSubmit.$$btn.on("tap", formSubmit.$$fire);
+    })();
+    // .....表单提交结束
+});</script></body></html>

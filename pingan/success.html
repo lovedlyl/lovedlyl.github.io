@@ -1,1 +1,60 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>忘记密码</title></head><body><div class="container"><header class="header"><div class="row"><span class="icon icon-circle">&lsaquo;</span></div><h1>忘记密码</h1><a class="regist" href="#">注册</a></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">成功找回用户名！</div></h2><div class="container"><div class="spacer-sm"></div><p class="text-sucess">您一账通用户名为：<span class="id text-info">wangsisi1988</span></p><div class="spacer-lg"></div><button class="btn btn-info">登录</button></div><script src="js/zepto.min.js"></script><script src="js/validate.js"></script><script src="js/modal.js"></script><script src="js/tooltip.js"></script><script src="js/index.js"></script></body></html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="css/main.css"><title>成功找回用户名</title></head><body><div class="container"><header class="header"><div class="row"><button class="icon icon-circle" data-toggle="back">&lsaquo;</button></div><a class="regist" href="#">注册</a><h1>忘记密码</h1></header></div><div class="clearfix"></div><h2 class="lead"><div class="container">成功找回用户名！</div></h2><div class="container"><div class="spacer-sm"></div><p class="text-sucess">您一账通用户名为：<span class="text-info" id="userName"></span></p><div class="spacer-lg"></div><button class="btn btn-info" id="login">登录</button></div><div class="modal"><div class="modal-dialog"><div class="modal-header">提醒！</div><div class="modal-content"></div><button class="modal-footer close">关闭</button></div><div class="modal-blackdrop"></div></div><script src="js/zepto.min.js"></script><script src="js/plugins.js"></script><script src="js/index.js"></script><script>// alert(1);
+
+$(function() {
+
+    // 页面加载时，通过本地缓存数据，请求用户名
+    // $.getItems 为自己写的插件，返回本地缓存所有内容为plain Object
+    var items = $.getItems();
+    var params = ($.extend(items, { request: "getUserName???????" }));
+    var userName;
+    // 获取用户名成功后，调用函数
+    var getUserNameSuccess = function(data) {
+        data = JSON.parse(data);
+        if (data.status == "success") {
+            //?????
+            userName = data.userName;
+            $("#userName").text(userName);
+            // 成功获取用户名后，才为提交登录按钮添加事件
+            $("#login").on("tap", login);
+        } else {
+            //??????????
+            warning(data.msg)
+        }
+    };
+    // 登录事件函数
+    var login = function(e) {
+        e.preventDefault();
+        params = $.extend(items, { request: "login?????", userName: userName });
+        $.post({
+            url: "url?????????????????",
+            data: $.serialize(params),
+            success: function(data) {
+                data = JSON.parse(data);
+                if (data.status = "success") {
+                    // ?????????????????
+                    // 是否是页面跳转
+                } else {
+                    waring("登录失败，请稍后再试！");
+                }
+            },
+            error: function(xhr) {
+                warning("登录失败，请稍后再试！")
+            }
+        });
+    };
+    // 加载时获取用户名
+    $.post({
+        url: "url??????????????????????",
+        data: $.serialize(params),
+        success: getUserNameSuccess,
+        error: function(xhr) {
+            warning("获取用户名失败，请稍后再试！")
+        }
+    });
+    // ...........
+
+
+
+
+
+});</script></body></html>
